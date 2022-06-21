@@ -1,0 +1,8 @@
+server:
+  port: 9012
+
+spring:
+  profiles:
+    active: common   # 使用公共模块的yml合并到当前的yml
+  application:
+    name: producer  # 设置服务名称  会在Eureka中显示

@@ -1,0 +1,56 @@
+spring:
+  # 配置数据库 参数
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.18.50.226:3306/demo?characterEncoding=utf8
+    username: admin
+    password: admin
+
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true                                    # 开启Spring Cloud的重试功能
+
+#配置 mybatis 的 实体层
+mybatis:
+  type-aliases-package: com.**.entity
+  mapper-locations: classpath*:/mapper/**/*Mapper.xml    # mapper映射文件位置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   #用于控制台打印sql语句
+    map-underscore-to-camel-case: true #开启将带有下划线的表字段 映射为驼峰格式的实体类属性
+##向Eureka 中注册实例
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://127.0.0.1:8000/eureka, http://127.0.0.1:8001/eureka, http://127.0.0.1:8002/eureka
+
+
+# 服务异常重试配置
+ribbon:
+  ConnectTimeout: 1000                                        # Ribbon的连接超时时间
+  ReadTimeout: 5000                                           # Ribbon的数据读取超时时间
+  OkToRetryOnAllOperations: true                              # 默认只对GET请求重试, 当设置为true时, 对POST等所有类型请求都重试
+  MaxAutoRetriesNextServer: 1                                 # 最大重试次数
+  MaxAutoRetries: 2                                           # #当前实例重试的次数，失败之后更换下个实例
+  ServerListRefreshInterval: 2000                             # Ribbon更新服务注册列表的频率
+
+# 什么是服务降级？
+# 用户的请求故障时，不会被阻塞，更不会无休止的等待或者看到系统崩溃，而是返回一个执行结果（例如: 返回友好的提示信息,然后发送应急邮件通知管理员进行维护…）。
+hystrix:
+  command:
+    default:
+      coreSize: 20                                            # 并发执行的核心线程数，默认10
+      maximumSize: 30                                         # 并发执行的最大线程数
+      maxQueueSize: 50                                        # 并发执行的最大线程数
+      queueSizeRejectionThreshold: 50                         # 队列截断阈值  , 超过可就不允许了 ,和maxQueueSize一致
+      keepAliveTimeMinutes: 3                                 # 分钟, 线程空闲存活时间
+      circuitBreaker:
+        errorThresholdPercentage: 50                          # 触发熔断错误比例阈值，默认值50%
+        sleepWindowInMilliseconds: 5000                       # 短路多久以后开始尝试是否恢复，默认5s
+        requestVolumeThreshold: 10                            # 熔断触发最小请求次数，默认值是20
+      execution:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 20                         # 允许的最大并发请求数  默认10  一般和coreSize设置一样   如果达到最大并发数时，后续请求会被拒绝 直接熔断
+          thread:
+            timeoutInMilliseconds: 1000                       # 访问超时时间 20000

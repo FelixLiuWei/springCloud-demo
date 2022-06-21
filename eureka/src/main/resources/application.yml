@@ -1,0 +1,24 @@
+server:
+  port: 8000
+
+
+spring:
+  application:
+    name: eureka  # 设置服务名称
+
+#配置Eureka
+eureka:
+  #datacenter: cloud   #这样eureka将会知道是在AWS云上
+  environment: prod
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+  server:
+    enable-self-preservation: true #开启Eureka自我保护机制：为了防止误杀服务而提供的一个机制。当个别客户端出现心跳失联时，则认为是客户端的问题，剔除掉客户端；
+                                    #当 Eureka 捕获到大量的心跳失败时，则认为可能是网络问题，进入自我保护机制；
+                                    #当客户端心跳恢复时，Eureka 会自动退出自我保护机制。 (推出保护机制后 刷新页面就没有报错了)
+  client:
+    register-with-eureka: false  #false表示不向注册中心注册自己。
+    fetch-registry: false #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://127.0.0.1:8000/eureka, http://127.0.0.1:8001/eureka, http://127.0.0.1:8002/eureka

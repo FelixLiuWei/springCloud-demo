@@ -1,0 +1,31 @@
+server:
+  port: 9002
+
+# 设置服务名称  会在Eureka中显示 而且其他方也要用的
+spring:
+  profiles:
+    active: common
+  application:
+    name: consumer
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000 # 连接超时时间
+        readTimeout: 5000
+  hystrix:
+    enabled: true                                     # If true, an OpenFeign client will be wrapped with a Hystrix circuit breaker.
+  compression:                                        # 请求和响应进行ZIP压缩
+    request:
+      enabled: true
+      mime-types: text/xml, application/xml, application/json    # 设置压缩的数据类型
+      min-request-size: 2048                                     # 设置触发压缩的大小下限
+    response:
+      enabled: true
+
+
+
+logging:
+  level:                                     # Fegin 日志以什么级别监听哪个接口 (是我们自己的feign接口)
+    com.consumer.client.ProducerFeign: debug  #连接到返回响应时间
