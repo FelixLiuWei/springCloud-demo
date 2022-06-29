@@ -4,6 +4,7 @@ import com.common.model.User;
 import com.consumer1.client.impl.ProducerFeignImplHystrix;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -11,4 +12,7 @@ import java.util.List;
 public interface ProducerFeign {
     @GetMapping("/user/all")
     List <User> getUser();
+
+    @GetMapping("/user/config/{key}")
+    String getKey(@PathVariable(value = "key") String key);
 }

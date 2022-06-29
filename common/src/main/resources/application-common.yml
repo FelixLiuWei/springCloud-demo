@@ -54,3 +54,11 @@ hystrix:
             maxConcurrentRequests: 20                         # 允许的最大并发请求数  默认10  一般和coreSize设置一样   如果达到最大并发数时，后续请求会被拒绝 直接熔断
           thread:
             timeoutInMilliseconds: 1000                       # 访问超时时间 20000
+
+apollo:
+  meta: http://localhost:8080
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true
+    namespaces: application                                   # 加载多个apollo配置文件

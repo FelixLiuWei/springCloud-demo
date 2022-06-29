@@ -16,4 +16,10 @@ public class ProducerFeignImplHystrix implements ProducerFeign {
         //返回一个空的数组,防止调用方报错,不至于影响到其他功能的使用
         return new ArrayList <>();
     }
+
+    @Override
+    public String getKey(String key) {
+        System.out.println("触发熔断，发送邮件给管理员！");
+        return new String("空");
+    }
 }

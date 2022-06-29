@@ -1,0 +1,54 @@
+server:
+  port: 10011
+
+# 设置  服务名 为gateway-service
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: common
+  cloud:
+    gateway:
+      default-filters:
+        - RewritePath=/api(?<segment>/?.*),/$\{segment}           # 去掉全部前缀api
+      routes:
+        - id: producer-route         # 路由id，可以随意写不影响  一般都是以要代理的服务器名称-route
+          uri: lb://producer         # 要访问的服务名称 (集群的时候可以防止宕机)   #我们请求http://producer/xxxx 会被拦截
+          order: 0
+          predicates:                #允许的路由地址,要算上过滤器(filters)
+            - Path=/api/user/**
+          filters:
+            - name: Hystrix                                                    # 网关(固定)
+              args:
+                name: producerFallbackHystrix                                  # 降级名称和方法名称一样就行了
+                fallbackUri: forward:/producerFallbackHystrix                  # 当发生降级后,降级回调的controller
+
+        - id: consumer-route         # 路由id，可以随意写不影响  一般都是以要代理的服务器名称-route
+          uri: lb://consumer         # 要访问的服务名称 (集群的时候可以防止宕机)  #我们请求http://consumer/xxxx 会被拦截
+          order: 1
+          predicates:                #允许的路由地址,要算上过滤器(filters)
+            - Path=/api/query/**
+            - Method=GET             #可以通过是 POST、GET、PUT、DELETE 等不同的请求方式来进行路由。
+                                          #1. 只有GET方法才会匹配转发请求，还可以限定
+
+               #- Hosts=www.123.com：若访问域名，可以通过Host配置 指定域名下转发请求
+            - Before=2023-06-20T12:00:00.789-07:00[Asia/Shanghai]  #在某个时间之前的请求才会被转发到 lb://consumer服务器上
+            - After=2022-01-20T17:42:47.789-07:00[Asia/Shanghai]   #在某个时间之后的请求才会被转发
+            - Between=2022-01-20T17:42:47.789-07:00[Asia/Shanghai],2023-06-20T12:00:00.789-07:00[Asia/Shanghai]     #在某个时间段之间的才会被转发
+          filters:
+            - name: Hystrix                                              # 网关(固定)                                         # 降级名称和方法名称一样就行了
+              args:
+                name: consumerFallbackHystrix                                  # 降级名称和方法名称一样就行了
+                fallbackUri: forward:/consumerFallbackHystrix                   # 当发生降级后,降级回调的controller
+
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allow-credentials: true
+#            allow-origins: "http://localhost:10010"
+#            allowed-headers: "*"
+#            allowed-methods:
+#              - OPTIONS
+#              - GET
+#              - POST
+#            max-age: 3600

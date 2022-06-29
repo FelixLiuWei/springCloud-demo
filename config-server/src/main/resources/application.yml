@@ -1,0 +1,23 @@
+#设置端口号
+server:
+  port: 12000
+
+# 设置  服务名 config-server
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: common
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/liuwei1994/spring-cloud-config.git     # 获取远程配置的默认环境
+          username: liuwei1994
+          password: Lw13912403610
+
+#向Eureka 中注册实例
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8000/eureka,http://127.0.0.1:8001/eureka,http://127.0.0.1:8002/eureka

@@ -1,4 +1,4 @@
-package com.gateway;
+package com.gateway1;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
@@ -10,9 +10,10 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @SpringBootApplication
 @EnableApolloConfig
-public class GatewayApplication {
+public class Gateway1Application {
+
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
+        SpringApplication.run(Gateway1Application.class, args);
     }
 
     /**
@@ -50,4 +51,3 @@ public class GatewayApplication {
         return new CorsWebFilter(source);
     }
 }
-

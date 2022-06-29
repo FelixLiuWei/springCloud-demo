@@ -1,5 +1,6 @@
 package com.consumer;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -14,6 +15,7 @@ import org.springframework.web.filter.CorsFilter;
 //@SpringBootApplication
 //@EnableCircuitBreaker  -- 熔断
 @EnableFeignClients
+@EnableApolloConfig
 public class ConsumerApplication {
 
     public static void main(String[] args) {
