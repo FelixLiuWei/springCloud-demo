@@ -1,4 +1,4 @@
-#RocketMQ（客户端）的 starter 实现过程。
+#RocketMQ的 starter 实现过程。
 ##1. spring-boot-starter 的实现步骤： 
 ###1.1 pom文件定义
 ####    a. 定义最终要生成的 starter 组件信息
