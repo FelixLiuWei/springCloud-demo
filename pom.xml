@@ -22,6 +22,7 @@
         <module>gateway1</module>
         <module>config-server</module>
         <module>mq-starter</module>
+        <module>ratelimiter</module>
     </modules>
 
     <parent>
