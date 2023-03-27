@@ -12,6 +12,14 @@
     <groupId>com.felix.springcloud</groupId>
     <artifactId>producer</artifactId>
 
+    <repositories>
+        <repository>
+            <id>com.e-iceblue</id>
+            <name>e-iceblue</name>
+            <url>https://repo.e-iceblue.cn/reposity/maven-public/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -25,11 +33,26 @@
             <version>1.0</version>
         </dependency>
 
+        <!-- 添加 RocketMQ starter模块-->
+        <dependency>
+            <groupId>com.felix.springcloud</groupId>
+            <artifactId>springCloud-demo-mq-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- Eureka客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+
+        <!--http://blog.chinaunix.net/uid-31499788-id-5821838.html-->
+        <!--office文件编辑-->
+        <!--<dependency>-->
+            <!--<groupId>e-iceblue</groupId>-->
+            <!--<artifactId>spire.office.free</artifactId>-->
+            <!--<version>5.3.1</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

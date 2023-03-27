@@ -1,0 +1,12 @@
+server:
+  port: 5002
+
+spring:
+  profiles:
+    active: common   # 使用公共模块的yml合并到当前的yml
+  application:
+    name: ratelimiter2   # 设置服务名称
+
+limit:
+  permitsPerSecond: 5
+  warmupPeriod: 2

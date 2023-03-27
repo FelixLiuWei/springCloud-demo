@@ -23,24 +23,26 @@
         <module>config-server</module>
         <module>mq-starter</module>
         <module>ratelimiter</module>
+        <module>ratelimiter2</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
-        <relativePath/>
+        <version>2.7.0</version>
     </parent>
     <properties>
-        <!--        JDK-->
-        <java.version>1.8</java.version>
-        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+        <!--JDK-->
+        <java.version>1.11</java.version>
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
         <mapper.starter.version>2.1.5</mapper.starter.version>
-        <mysql.version>8.0.21</mysql.version>
+        <mysql.version>8.0.29</mysql.version>
         <mybatis.version>2.1.3</mybatis.version>
+        <hystrix.version>2.1.3.RELEASE</hystrix.version>
     </properties>
     <dependencyManagement>
-        <dependencies> <!-- springCloud -->
+        <dependencies>
+            <!-- springCloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -59,9 +61,14 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+                <version>${hystrix.version}</version>
+            </dependency>
 
         </dependencies>
-    </dependencyManagement>
+    </dependencyManagement>DataSourceTransactionManager
 
     <dependencies>
 
@@ -70,5 +77,18 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

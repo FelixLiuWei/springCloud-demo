@@ -1,0 +1,8 @@
+server:
+  port: 5001
+
+spring:
+  profiles:
+    active: common   # 使用公共模块的yml合并到当前的yml
+  application:
+    name: ratelimiter   # 设置服务名称
