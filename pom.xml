@@ -10,6 +10,7 @@
     <version>1.0</version>
     <modules>
         <module>common</module>
+        <module>mq-starter</module>
         <module>eureka</module>
         <module>eureka1</module>
         <module>eureka2</module>
@@ -21,24 +22,24 @@
         <module>consumer1</module>
         <module>gateway1</module>
         <module>config-server</module>
-        <module>mq-starter</module>
         <module>ratelimiter</module>
         <module>ratelimiter2</module>
+        <module>annotationDemo</module>
     </modules>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
-    </parent>
     <properties>
-        <!--JDK-->
-        <java.version>1.11</java.version>
-        <spring-cloud.version>2022.0.0</spring-cloud.version>
-        <mapper.starter.version>2.1.5</mapper.starter.version>
-        <mysql.version>8.0.29</mysql.version>
-        <mybatis.version>2.1.3</mybatis.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <maven.compile.source>11</maven.compile.source>
+        <maven.compile.target>11</maven.compile.target>
+        <springBoot.version>2.6.10</springBoot.version>
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
+        <mysql.version>8.0.31</mysql.version>
+        <mybatis.version>3.5.11</mybatis.version>
+        <mybatis-springBoot.version>2.2.2</mybatis-springBoot.version>
         <hystrix.version>2.1.3.RELEASE</hystrix.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -49,34 +50,52 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency> <!-- 通用Mapper启动器 -->
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springBoot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.version}</version>
+                <version>${mybatis-springBoot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
                 <version>${hystrix.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
         </dependencies>
-    </dependencyManagement>DataSourceTransactionManager
+    </dependencyManagement>
 
-    <dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compile.source}</source>
+                    <target>${maven.compile.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 
     <repositories>
         <repository>
@@ -89,6 +108,45 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>demo-release</id>
+            <url>http://localhost:8081/repository/demo-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>demo-snapshot</id>
+            <url>http://localhost:8081/repository/demo-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
+
+    <profiles>
+        <profile>
+            <id>demo</id>
+            <distributionManagement>
+                <!-- 两个ID必须与 setting.xml中的<server><id>nexus-releases</id></server>保持一致-->
+                <repository>
+                    <id>demo-releases</id>
+                    <name>Nexus Release Repository</name>
+                    <url>http://localhost:8081/repository/demo-releases</url>
+                </repository>
+                <snapshotRepository>
+                    <id>demo-snapshots</id>
+                    <name>Nexus Snapshot Repository</name>
+                    <url>http://localhost:8081/repository/demo-snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
 </project>

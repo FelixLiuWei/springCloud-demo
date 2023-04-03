@@ -2,18 +2,21 @@ package com.consumer;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-@SpringCloudApplication
 //@SpringCloudApplication 替代下面三个注解
-//@EnableDiscoveryClient
-//@SpringBootApplication
-//@EnableCircuitBreaker  -- 熔断
+@EnableDiscoveryClient
+@SpringBootApplication
+//@EnableCircuitBreaker//-- 熔断
+
+@EnableHystrix
 @EnableFeignClients
 @EnableApolloConfig
 public class ConsumerApplication {

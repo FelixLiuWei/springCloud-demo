@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.annotation.demo.dao.UserDao">
+    <resultMap id="userResult" type="com.common.model.User">
+        <id column="id" property="id"/>
+        <result column="age" property="age"/>
+        <result column="name" property="name"/>
+
+<!--        <result column="create_date" property="createDate"/>-->
+<!--        <result column="create_date" property="createDate"/>-->
+<!--        <result column="update_date" property="updateDate"/>-->
+<!--        <result column="create_by" property="createUser"/>-->
+<!--        <result column="update_by" property="updateUser"/>-->
+<!--        <result column="valid" property="isValid"/>-->
+    </resultMap>
+
+    <select id="insert" parameterType="com.common.model.User" resultMap="userResult">
+    INSERT INTO `user` (
+            id,
+            age,
+           `name`
+            )
+        VALUES (
+            #{id},
+            #{age},
+            #{name}
+        )
+    </select>
+</mapper>

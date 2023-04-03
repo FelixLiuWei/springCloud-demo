@@ -15,7 +15,7 @@ public class UserServiceImpl implements IUserService {
         User user = new User();
         user.setAge(1);
         user.setName("Jerry1");
-        user.setId(1);
+        user.setId("1");
         userList.add(user);
         return userList;
     }
