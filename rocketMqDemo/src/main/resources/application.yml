@@ -1,0 +1,35 @@
+server:
+  port: 1002
+spring:
+  # 配置数据库 参数
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.18.50.226:3306/demo?characterEncoding=utf8
+    username: admin
+    password: admin
+
+  redis:
+    host: "localhost"
+    port: 6379
+
+demo:
+  rocketmq:
+    business1:
+      name-server: "127.0.0.1:9876"
+      producer:
+        group: "PG-DEV-BFO-BIDAUTH"
+      consumer:
+        group: "CG-DEV-BFO-BIDAUTH-BFO-BIDAUTH"
+        topic: "TP-DEV-BFO-BIDAUTH"
+    business2:
+      name-server: "127.0.0.1:9876"
+      producer:
+        group: "PG-DEV-BFO-LEADS"
+      consumer:
+        group: "CG-DEV-BFO-LEADS-BFO-LEADS"
+        topic: "TP-DEV-BFO-LEADS"
+logging:
+  level:
+    root: debug
+  pattern:
+    console: '%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M:%L - %msg%n'

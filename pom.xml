@@ -25,6 +25,7 @@
         <module>ratelimiter</module>
         <module>ratelimiter2</module>
         <module>annotationDemo</module>
+        <module>rocketMqDemo</module>
     </modules>
 
     <properties>
@@ -138,12 +139,12 @@
                 <repository>
                     <id>demo-releases</id>
                     <name>Nexus Release Repository</name>
-                    <url>http://localhost:8081/repository/demo-releases</url>
+                    <url>http://localhost:8081/repository/demo-releases/</url>
                 </repository>
                 <snapshotRepository>
                     <id>demo-snapshots</id>
                     <name>Nexus Snapshot Repository</name>
-                    <url>http://localhost:8081/repository/demo-snapshots</url>
+                    <url>http://localhost:8081/repository/demo-snapshots/</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>

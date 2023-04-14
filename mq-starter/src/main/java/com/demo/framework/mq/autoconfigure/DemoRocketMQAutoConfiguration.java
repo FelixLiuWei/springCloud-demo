@@ -1,6 +1,6 @@
 package com.demo.framework.mq.autoconfigure;
 
-import com.demo.framework.mq.constant.CloudDemoRocketMQConstants;
+import com.demo.framework.mq.constant.DemoRocketMQConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
@@ -45,7 +45,7 @@ import org.springframework.util.StringUtils;
 @Import({MessageConverterConfiguration.class, ListenerContainerConfiguration.class, ExtProducerResetConfiguration.class, ExtConsumerResetConfiguration.class, RocketMQTransactionConfiguration.class})
 @AutoConfigureAfter({MessageConverterConfiguration.class})
 @AutoConfigureBefore({RocketMQTransactionConfiguration.class})
-public class CloudDemoRocketMQAutoConfiguration implements ApplicationContextAware {
+public class DemoRocketMQAutoConfiguration implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
@@ -54,18 +54,8 @@ public class CloudDemoRocketMQAutoConfiguration implements ApplicationContextAwa
         this.applicationContext = applicationContext;
     }
 
-    @Bean(name = CloudDemoRocketMQConstants.BUSINESS1_TEMPLATE, destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = CloudDemoRocketMQConstants.BUSINESS1_TEMPLATE)
-    @ConditionalOnProperty(prefix = "demo.rocketmq.business1", value = {"name-server", "producer.group"})
-    public RocketMQTemplate defaultMQProducer(DemoRocketMQProperties.DemoBusiness1RocketMQProperties rocketMQProperties, RocketMQMessageConverter rocketMQMessageConverter) {
-        RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
-        rocketMQTemplate.setProducer(defaultMQProducer(rocketMQProperties));
-        rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
-        return rocketMQTemplate;
-    }
-
-    @Bean(name = CloudDemoRocketMQConstants.BUSINESS1_TEMPLATE, destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = CloudDemoRocketMQConstants.BUSINESS1_TEMPLATE)
+    @Bean(name = DemoRocketMQConstants.BUSINESS1_TEMPLATE, destroyMethod = "destroy")
+    @ConditionalOnMissingBean(name = DemoRocketMQConstants.BUSINESS1_TEMPLATE)
     @ConditionalOnProperty(prefix = "demo.rocketmq.business1", value = {"name-server", "producer.group"})
     public RocketMQTemplate demoBusiness1RocketMQTemplate(DemoRocketMQProperties.DemoBusiness1RocketMQProperties rocketMQProperties, RocketMQMessageConverter rocketMQMessageConverter) {
         RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
@@ -74,9 +64,9 @@ public class CloudDemoRocketMQAutoConfiguration implements ApplicationContextAwa
         return rocketMQTemplate;
     }
 
-    @Bean(name = CloudDemoRocketMQConstants.BUSINESS2_TEMPLATE, destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = CloudDemoRocketMQConstants.BUSINESS2_TEMPLATE)
-    @ConditionalOnProperty(prefix = "demo.rocketmq.business1", value = {"name-server", "producer.group"})
+    @Bean(name = DemoRocketMQConstants.BUSINESS2_TEMPLATE, destroyMethod = "destroy")
+    @ConditionalOnMissingBean(name = DemoRocketMQConstants.BUSINESS2_TEMPLATE)
+    @ConditionalOnProperty(prefix = "demo.rocketmq.business2", value = {"name-server", "producer.group"})
     public RocketMQTemplate demoBusiness2RocketMQTemplate(DemoRocketMQProperties.DemoBusiness2RocketMQProperties rocketMQProperties, RocketMQMessageConverter rocketMQMessageConverter) {
         RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
         rocketMQTemplate.setProducer(defaultMQProducer(rocketMQProperties));
@@ -84,9 +74,9 @@ public class CloudDemoRocketMQAutoConfiguration implements ApplicationContextAwa
         return rocketMQTemplate;
     }
 
-    @Bean(name = CloudDemoRocketMQConstants.BUSINESS3_TEMPLATE, destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = CloudDemoRocketMQConstants.BUSINESS3_TEMPLATE)
-    @ConditionalOnProperty(prefix = "demo.rocketmq.business1", value = {"name-server", "producer.group"})
+    @Bean(name = DemoRocketMQConstants.BUSINESS3_TEMPLATE, destroyMethod = "destroy")
+    @ConditionalOnMissingBean(name = DemoRocketMQConstants.BUSINESS3_TEMPLATE)
+    @ConditionalOnProperty(prefix = "demo.rocketmq.business3", value = {"name-server", "producer.group"})
     public RocketMQTemplate demoBusiness3RocketMQTemplate(DemoRocketMQProperties.DemoBusiness3RocketMQProperties rocketMQProperties, RocketMQMessageConverter rocketMQMessageConverter) {
         RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
         rocketMQTemplate.setProducer(defaultMQProducer(rocketMQProperties));
@@ -94,17 +84,17 @@ public class CloudDemoRocketMQAutoConfiguration implements ApplicationContextAwa
         return rocketMQTemplate;
     }
 
-    @Bean(name = CloudDemoRocketMQConstants.BUSINESS4_TEMPLATE, destroyMethod = "destroy")
-    @ConditionalOnMissingBean(name = CloudDemoRocketMQConstants.BUSINESS4_TEMPLATE)
-    @ConditionalOnProperty(prefix = "demo.rocketmq.business1", value = {"name-server", "producer.group"})
-    public RocketMQTemplate demoBusiness3RocketMQTemplate(DemoRocketMQProperties.DemoBusiness4RocketMQProperties rocketMQProperties, RocketMQMessageConverter rocketMQMessageConverter) {
+    @Bean(name = DemoRocketMQConstants.BUSINESS4_TEMPLATE, destroyMethod = "destroy")
+    @ConditionalOnMissingBean(name = DemoRocketMQConstants.BUSINESS4_TEMPLATE)
+    @ConditionalOnProperty(prefix = "demo.rocketmq.business4", value = {"name-server", "producer.group"})
+    public RocketMQTemplate demoBusiness4RocketMQTemplate(DemoRocketMQProperties.DemoBusiness4RocketMQProperties rocketMQProperties, RocketMQMessageConverter rocketMQMessageConverter) {
         RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
         rocketMQTemplate.setProducer(defaultMQProducer(rocketMQProperties));
         rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
         return rocketMQTemplate;
     }
 
-    public DefaultMQProducer defaultMQProducer(RocketMQProperties rocketMQProperties) {
+    public DefaultMQProducer defaultMQProducer(DemoRocketMQProperties.DefaultRocketMQProperties rocketMQProperties) {
         RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
         String nameServer = rocketMQProperties.getNameServer();
         String groupName = producerConfig.getGroup();

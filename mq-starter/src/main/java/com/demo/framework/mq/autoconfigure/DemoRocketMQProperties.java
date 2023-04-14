@@ -17,6 +17,7 @@
 
 package com.demo.framework.mq.autoconfigure;
 
+import lombok.Data;
 import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -27,18 +28,27 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class DemoRocketMQProperties {
 
    @ConfigurationProperties(prefix = "demo.rocketmq.business1")
-   public class DemoBusiness1RocketMQProperties extends RocketMQProperties {
+   public static class DemoBusiness1RocketMQProperties extends DefaultRocketMQProperties {
    }
 
    @ConfigurationProperties(prefix = "demo.rocketmq.business2")
-   public class DemoBusiness2RocketMQProperties extends RocketMQProperties {
+   public static class DemoBusiness2RocketMQProperties extends DefaultRocketMQProperties {
    }
 
    @ConfigurationProperties(prefix = "demo.rocketmq.business3")
-   public class DemoBusiness3RocketMQProperties extends RocketMQProperties {
+   public static class DemoBusiness3RocketMQProperties extends DefaultRocketMQProperties {
    }
 
    @ConfigurationProperties(prefix = "demo.rocketmq.business4")
-   public class DemoBusiness4RocketMQProperties extends RocketMQProperties {
+   public static class DemoBusiness4RocketMQProperties extends DefaultRocketMQProperties {
    }
+
+   @Data
+   public static class DefaultRocketMQProperties {
+      protected String nameServer;
+      protected String accessChannel;
+      protected RocketMQProperties.Producer producer;
+      protected RocketMQProperties.Consumer consumer = new RocketMQProperties.Consumer();
+   }
+
 }
